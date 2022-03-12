@@ -14,7 +14,7 @@ type Context struct {
 // LoadRoutes godoc
 func (route *Context) LoadRoutes() {
 
-	// gfxHandler := handler.Context{}
+	// bareksaHandler := handler.Context{}
 
 	route.R.GET("/ping", func(c *gin.Context) {
 		ping := map[string]interface{}{
@@ -28,14 +28,6 @@ func (route *Context) LoadRoutes() {
 	// api := route.R.Group("/api")
 	// {
 	// 	{
-	// 		api.GET("/", gfxHandler.Hello)
-	// 		api.GET("/palindrome", gfxHandler.Palindrome)
-	// 		api.GET("/language", gfxHandler.Language)
-	// 		api.POST("/language", gfxHandler.PostLanguage)
-	// 		api.GET("/languages", gfxHandler.GetAllLanguages)
-	// 		api.GET("/language/:id", gfxHandler.GetOneLanguage)
-	// 		api.PATCH("/language/:id", gfxHandler.UpdateOneLanguage)
-	// 		api.DELETE("/language/:id", gfxHandler.DeleteOneLanguage)
 	// 	}
 	// }
 	return
