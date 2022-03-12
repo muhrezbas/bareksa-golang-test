@@ -1,0 +1,13 @@
+*.tgz
+.env
+*.env
+*.sql
+*.vscode
+
+/.env
+/vendor
+/deploy 
+/log_*
+
+*docker
+.*yml

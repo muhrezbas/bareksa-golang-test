@@ -1,0 +1,13 @@
+*.tgz
+.env
+*.env
+*.sql
+*.vscode
+*.conf
+*.DS_Store
+
+.DS_Store/
+/.env
+/vendor
+/deploy 
+/log_*

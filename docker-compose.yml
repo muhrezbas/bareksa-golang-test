@@ -1,0 +1,29 @@
+version: '3'
+services:
+    report-daily:
+        image: "test-api"
+        container_name: test-api
+        volumes:
+           - /etc/localtime:/etc/localtime
+           - ./conf:/conf
+           - /home/gfxbni:/home/gfxbni
+        env_file:
+            - .env
+        ports:
+            - "${APP_PORT}:${APP_PORT}"
+        restart: always
+        network_mode: host
+        depends_on: 
+            - db_test
+    db_test:
+        image: mysql
+        container_name: db_test
+        ports:
+          - "3306:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: examplepassword!
+          MYSQL_HOST: db
+  
+
