@@ -1,5 +1,7 @@
 FROM golang:1.13-alpine3.10 AS builder
 
+RUN apk add build-base
+
 RUN apk update && apk upgrade && apk --no-cache --update add ca-certificates tzdata
 
 # Working Directory
@@ -11,6 +13,8 @@ COPY . .
 # View Of Current Directory
 RUN echo $PWD && ls -la
 
+
+RUN go test -v ./...
 # Fetch dependencies.
 RUN go get -d -v
 

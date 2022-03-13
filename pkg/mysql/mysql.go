@@ -40,7 +40,10 @@ func (conf Config) Connect() (*gorm.DB, error) {
 	if err = db.DB().Ping(); err != nil {
 		db.Close()
 	} else {
-		log.Println("MySQL Has Connected ..........................!")
+		log.Println("MySQL Has Connected ............................!")
+		tables := []string{}
+		db.Select(&tables, "SHOW TABLES")
+		fmt.Println(tables)
 	}
 	db.DB().SetMaxIdleConns(0)
 	return db, nil

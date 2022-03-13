@@ -3,6 +3,7 @@ package main
 import (
 	"bareksa-api/config"
 	"bareksa-api/pkg/mysql"
+	"bareksa-api/pkg/redisClient"
 	"bareksa-api/router"
 	"os"
 
@@ -14,14 +15,16 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 
+	"github.com/go-redis/redis"
 	// mysql ...
 	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
-	db  *gorm.DB
-	cfg config.Interface
-	err error
+	db         *gorm.DB
+	redisCache *redis.Client
+	cfg        config.Interface
+	err        error
 )
 
 func init() {
@@ -47,6 +50,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	redisCache, err = redisClient.Connect()
+	if err != nil {
+		panic(err)
+	}
 
 	routers := gin.Default()
 	routers.Use(cors.New(cors.Config{
@@ -59,7 +66,10 @@ func main() {
 	}))
 	routers.Use(gzip.Gzip(gzip.DefaultCompression))
 	app := router.Context{
-		R: routers,
+		R:          routers,
+		DB:         db,
+		RedisCache: redisCache,
+		Config:     cfg,
 	}
 	app.LoadRoutes()
 	app.R.Run(":" + os.Getenv("APP_PORT"))
