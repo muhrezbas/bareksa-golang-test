@@ -45,13 +45,11 @@ type news struct {
 }
 
 func (watch *news) CreateNews(body News) (News, error) {
-	fmt.Println(body.Name, "haloooo news")
 	result := watch.db.Table("news").Create(&body)
 	fmt.Println(result)
 	return body, nil
 }
 func (watch *news) UpdateNews(body News, id string) (News, error) {
-	fmt.Println(body.Name, "haloooo")
 	// result := watch.db.Table("news").Create(&body)
 	result := watch.db.Table("news").Where("id = ?", id).Updates(map[string]interface{}{"name": body.Name})
 	fmt.Println(result)
@@ -88,7 +86,6 @@ func (watch *news) FindNewsByStatus(id string) (News, error) {
 	fmt.Println(myKey, "tess")
 	val, err := watch.redisCache.Get(myKey).Result()
 	if err != nil {
-		fmt.Println(err, "error")
 		var dirs News
 		if err := watch.db.Table("news").Where("`status` = ?", id).Find(&dirs).Error; err != nil {
 			return dirs, err
@@ -99,12 +96,10 @@ func (watch *news) FindNewsByStatus(id string) (News, error) {
 		}
 		tess := watch.redisCache.Set(myKey, p, 8000000000).Err()
 		if tess != nil {
-			fmt.Println(tess, "err redis")
 			return dirs, err
 		}
 		return dirs, nil
 	}
-	fmt.Println("with redis")
 	var deserialized News
 	rawIn := json.RawMessage(val)
 
@@ -124,7 +119,6 @@ func (watch *news) FindNewsByID(id string) (News, error) {
 	fmt.Println(myKey, "tess")
 	val, err := watch.redisCache.Get(myKey).Result()
 	if err != nil {
-		fmt.Println(err, "error")
 		var dirs News
 		if err := watch.db.Table("news").Where("`id` = ?", id).Find(&dirs).Error; err != nil {
 			return dirs, err
@@ -135,12 +129,10 @@ func (watch *news) FindNewsByID(id string) (News, error) {
 		}
 		tess := watch.redisCache.Set(myKey, p, 8000000000).Err()
 		if tess != nil {
-			fmt.Println(tess, "err redis")
 			return dirs, err
 		}
 		return dirs, nil
 	}
-	fmt.Println("with redis")
 	var deserialized News
 	rawIn := json.RawMessage(val)
 
@@ -160,7 +152,6 @@ func (watch *news) FindNewsByTopic(id string) (News, error) {
 	fmt.Println(myKey, "tess")
 	val, err := watch.redisCache.Get(myKey).Result()
 	if err != nil {
-		fmt.Println(err, "error")
 		var dirs News
 		if err := watch.db.Table("news").Where("`topic_id` = ?", id).Find(&dirs).Error; err != nil {
 			return dirs, err
@@ -171,12 +162,10 @@ func (watch *news) FindNewsByTopic(id string) (News, error) {
 		}
 		tess := watch.redisCache.Set(myKey, p, 8000000000).Err()
 		if tess != nil {
-			fmt.Println(tess, "err redis")
 			return dirs, err
 		}
 		return dirs, nil
 	}
-	fmt.Println("with redis")
 	var deserialized News
 	rawIn := json.RawMessage(val)
 

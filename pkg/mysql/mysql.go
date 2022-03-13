@@ -26,7 +26,6 @@ type Config struct {
 func (conf Config) Connect() (*gorm.DB, error) {
 	var db *gorm.DB
 	var err error
-	fmt.Println(conf)
 
 	DBURL := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=%s",
 		conf.User, conf.Pass, conf.Host, conf.Port, conf.DB, LOC,
@@ -43,7 +42,6 @@ func (conf Config) Connect() (*gorm.DB, error) {
 		log.Println("MySQL Has Connected ............................!")
 		tables := []string{}
 		db.Select(&tables, "SHOW TABLES")
-		fmt.Println(tables)
 	}
 	db.DB().SetMaxIdleConns(0)
 	return db, nil

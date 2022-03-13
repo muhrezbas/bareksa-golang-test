@@ -50,7 +50,6 @@ type tags struct {
 }
 
 func (watch *tags) CreateTagsNews(body TagsNews) (TagsNews, error) {
-	fmt.Println(body, "feafno")
 	result := watch.db.Table("tags_news").Create(&body)
 	fmt.Println(result)
 	return body, nil
@@ -63,7 +62,6 @@ func (watch *tags) CreateTags(body Tags) (Tags, error) {
 	return body, nil
 }
 func (watch *tags) UpdateTags(body Tags, id string) (Tags, error) {
-	fmt.Println(body.Name, "haloooo")
 	// result := watch.db.Table("tags").Create(&body)
 	result := watch.db.Table("tags").Where("id = ?", id).Updates(map[string]interface{}{"name": body.Name})
 	fmt.Println(result)
@@ -97,10 +95,8 @@ func (watch *tags) FindTags() ([]Tags, error) {
 
 func (watch *tags) FindTagsByID(id string) (Tags, error) {
 	myKey := "tags" + id
-	fmt.Println(myKey, "tess")
 	val, err := watch.redisCache.Get(myKey).Result()
 	if err != nil {
-		fmt.Println(err, "error")
 		var dirs Tags
 		if err := watch.db.Table("tags").Where("`id` = ?", id).Find(&dirs).Error; err != nil {
 			return dirs, err
@@ -111,12 +107,10 @@ func (watch *tags) FindTagsByID(id string) (Tags, error) {
 		}
 		tess := watch.redisCache.Set(myKey, p, 8000000000).Err()
 		if tess != nil {
-			fmt.Println(tess, "err redis")
 			return dirs, err
 		}
 		return dirs, nil
 	}
-	fmt.Println("with redis")
 	var deserialized Tags
 	rawIn := json.RawMessage(val)
 

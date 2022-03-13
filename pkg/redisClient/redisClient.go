@@ -11,7 +11,6 @@ func Connect() (*redis.Client, error) {
 
 	result, err := ping(redisClient)
 	if err != nil {
-		fmt.Println(err)
 		return redisClient, nil
 	} else {
 		fmt.Println(result)

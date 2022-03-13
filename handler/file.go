@@ -30,7 +30,6 @@ func (h *Context) GetTopic(c *gin.Context) {
 }
 func (h *Context) GetTopicByID(c *gin.Context) {
 	id := c.Param("id")
-	fmt.Println(id)
 	result, err := h.UC.GetTopicByID(id)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -46,7 +45,6 @@ func (h *Context) CreateTopic(c *gin.Context) {
 		SendBadRequets(c, err.Error())
 		return
 	}
-	fmt.Println(topicData, "handler topic")
 	result, err := h.UC.CreateTopic(topicData)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -63,7 +61,6 @@ func (h *Context) UpdateTopic(c *gin.Context) {
 		SendBadRequets(c, err.Error())
 		return
 	}
-	fmt.Println(topicData, "handler")
 	result, err := h.UC.UpdateTopic(topicData, id)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -78,7 +75,6 @@ func (h *Context) CreateNews(c *gin.Context) {
 		SendBadRequets(c, err.Error())
 		return
 	}
-	fmt.Println(newsData, "handler news")
 	result, err := h.UC.CreateNews(newsData)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -99,7 +95,6 @@ func (h *Context) GetNews(c *gin.Context) {
 }
 func (h *Context) GetNewsByID(c *gin.Context) {
 	id := c.Param("id")
-	fmt.Println(id)
 	result, err := h.UC.GetNewsByID(id)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -110,7 +105,6 @@ func (h *Context) GetNewsByID(c *gin.Context) {
 }
 func (h *Context) GetNewsByTopic(c *gin.Context) {
 	id := c.Param("id")
-	fmt.Println(id)
 	result, err := h.UC.GetNewsByTopic(id)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -121,7 +115,6 @@ func (h *Context) GetNewsByTopic(c *gin.Context) {
 }
 func (h *Context) GetNewsByStatus(c *gin.Context) {
 	id := c.Param("id")
-	fmt.Println(id)
 	result, err := h.UC.GetNewsByStatus(id)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -138,7 +131,6 @@ func (h *Context) UpdateNews(c *gin.Context) {
 		SendBadRequets(c, err.Error())
 		return
 	}
-	fmt.Println(newsData, "handler")
 	result, err := h.UC.UpdateNews(newsData, id)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -155,12 +147,9 @@ func (h *Context) CreateTags(c *gin.Context) {
 		SendBadRequets(c, err.Error())
 		return
 	}
-	fmt.Println(getTags, "fafmoa")
 	tags := model.Tags{Name: getTags.Name}
 	resultTags, err := h.UC.CreateTags(tags)
-	fmt.Println(resultTags, "handler tagss", err)
 	for _, f := range getTags.NewsID {
-		fmt.Println(f)
 		user := model.TagsNews{NewsID: f, TagID: resultTags.ID}
 		result, err := h.UC.CreateTagsNews(user)
 		fmt.Println(result, "handler tagss news", err)
@@ -185,7 +174,6 @@ func (h *Context) GetTags(c *gin.Context) {
 }
 func (h *Context) GetTagsByID(c *gin.Context) {
 	id := c.Param("id")
-	fmt.Println(id)
 	result, err := h.UC.GetTagsByID(id)
 	if err != nil {
 		SendError(c, 200, err.Error())
@@ -202,7 +190,6 @@ func (h *Context) UpdateTags(c *gin.Context) {
 		SendBadRequets(c, err.Error())
 		return
 	}
-	fmt.Println(newsData, "handler")
 	result, err := h.UC.UpdateTags(newsData, id)
 	if err != nil {
 		SendError(c, 200, err.Error())
