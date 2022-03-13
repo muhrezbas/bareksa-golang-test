@@ -2,6 +2,7 @@ package main
 
 import (
 	"bareksa-api/config"
+	"bareksa-api/pkg/mysql"
 	"bareksa-api/router"
 	"os"
 
@@ -10,10 +11,15 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
+
+	// mysql ...
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
+	db  *gorm.DB
 	cfg config.Interface
 	err error
 )
@@ -28,6 +34,19 @@ func init() {
 }
 
 func main() {
+
+	NewMysql := mysql.Config{
+		Host: cfg.GetString("mysql", "host"),
+		Port: cfg.GetInt("mysql", "port"),
+		User: cfg.GetString("mysql", "user"),
+		Pass: cfg.GetString("mysql", "pass"),
+		DB:   cfg.GetString("mysql", "db"),
+	}
+
+	db, err = NewMysql.Connect()
+	if err != nil {
+		panic(err)
+	}
 
 	routers := gin.Default()
 	routers.Use(cors.New(cors.Config{

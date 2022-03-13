@@ -1,7 +1,6 @@
 *.tgz
 .env
 *.env
-*.sql
 *.vscode
 
 /.env
