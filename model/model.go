@@ -20,6 +20,9 @@ type Ctx interface {
 	CreateTopic(body Topic) (Topic, error)
 	UpdateTopic(body Topic, id string) (Topic, error)
 }
+type TopicService struct {
+	Ctx
+}
 
 // Pengguna godoc
 type Topic struct {
